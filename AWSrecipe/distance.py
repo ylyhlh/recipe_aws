@@ -13,14 +13,16 @@ def getDistance(origin, destinations):
 		url = url + dest + "|"
 	url = url[0:len(url)-1]
 	url = url + "&sensor=false"
-	print url
 	#parsing the xml reply from google map
-	xmlFile = urllib.urlretrieve(url,'test.xml')
+	#xmlFile = urllib.urlretrieve(url,'test.xml')
 	xmlFileOpen = urllib2.urlopen(url).read()
 	xmlFileDom = parseString(xmlFileOpen)
 	distances = []
 	for i in range(len(destinations)):
-		distances.append(xmlFileDom.getElementsByTagName("DistanceMatrixResponse")[0].getElementsByTagName("row")[0].getElementsByTagName("element")[i].getElementsByTagName("distance")[0].getElementsByTagName("text")[0].toxml().replace('<text>','').replace('</text>',''))
+		res = []
+		res.append(xmlFileDom.getElementsByTagName("DistanceMatrixResponse")[0].getElementsByTagName("row")[0].getElementsByTagName("element")[i].getElementsByTagName("distance")[0].getElementsByTagName("text")[0].toxml().replace('<text>','').replace('</text>',''))
+		res.append(int(xmlFileDom.getElementsByTagName("DistanceMatrixResponse")[0].getElementsByTagName("row")[0].getElementsByTagName("element")[i].getElementsByTagName("distance")[0].getElementsByTagName("value")[0].toxml().replace('<value>','').replace('</value>','')))
+		distances.append(res)
 	return distances
 
 #print getDistance("40.63319,-73.99440",["Victoria+BC","42.25446,-92.21648"])
