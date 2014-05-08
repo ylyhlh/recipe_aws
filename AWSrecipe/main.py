@@ -17,7 +17,7 @@ def getNearestMarket(here, markets):
 	markets.sort(key=lambda student: student['DistanceValue'])
 	print markets
 	return markets[0]
-if __name__ == '__main__':
+def run():
 	conn = boto.sqs.connect_to_region("us-west-2")
 	requestQueue = conn.get_queue('GredientRequest')
 	requestQueue.set_message_class(RawMessage)
